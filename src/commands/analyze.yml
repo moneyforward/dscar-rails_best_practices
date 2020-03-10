@@ -1,0 +1,56 @@
+description: Analyze code statically using Rails Best Practices
+parameters:
+  prepare:
+    description: Specify the required steps before analysis if necessary
+    type: steps
+    default:
+      - run: sudo gem install rails_best_practices
+  analysis-arguments:
+    description: Arguments of eslint command
+    type: string
+    default: ""
+  starting-points:
+    description: Specify the path of starting to search for files to analyze (Multiple paths can be specified by separating them with line feed)
+    type: string
+    default: "."
+  result-path:
+    description: Path to save analysis result
+    type: string
+    default: "/dev/null"
+  no-analysis-output-timeout:
+    description: Elapsed time the command can run without output. The string is a decimal with unit suffix, such as “20m”, “1.25h”, “5s”
+    type: string
+    default: 10m
+  redirecting-output:
+    description: Specify "/dev/null" if you do not want to display the analysis results on the standard output
+    type: enum
+    enum: ["/dev/stdout", "/dev/stderr", "/dev/null"]
+    default: "/dev/null"
+steps:
+  - dscar/analyze:
+      step-name: Analyze code statically using Rails Best Practices
+      prepare:
+        - run:
+            name: mkfifo $RAILS_BEST_PRACTICES_OUTPUT_PATH
+            command: |
+              RAILS_BEST_PRACTICES_OUTPUT_PATH=$(mktemp)
+              rm "${RAILS_BEST_PRACTICES_OUTPUT_PATH}"
+              mkfifo "${RAILS_BEST_PRACTICES_OUTPUT_PATH}"
+
+              cat \<<-EOT >> $BASH_ENV
+              export RAILS_BEST_PRACTICES_OUTPUT_PATH="${RAILS_BEST_PRACTICES_OUTPUT_PATH}"
+              export ANALYSIS_ARGUMENTS=(
+                 --silent -f xml --output-file "${RAILS_BEST_PRACTICES_OUTPUT_PATH}"
+              )
+              export TRANSFORMATION_ARGUMENTS=(
+                "${RAILS_BEST_PRACTICES_OUTPUT_PATH}"
+              )
+              EOT
+        - steps: << parameters.prepare >>
+      analysis-command: rails_best_practices
+      analysis-arguments: << parameters.analysis-arguments >>
+      transformation-command: cat
+      starting-points: << parameters.starting-points >>
+      result-path: << parameters.result-path >>
+      no-output-timeout: << parameters.no-analysis-output-timeout >>
+      redirecting-output: << parameters.redirecting-output >>
