@@ -1,0 +1,3 @@
+description: Install Rails Best Practices
+steps:
+  - run: sudo gem install rails_best_practices
