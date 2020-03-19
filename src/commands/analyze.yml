@@ -13,6 +13,10 @@ parameters:
     description: Specify the path of starting to search for files to analyze (Multiple paths can be specified by separating them with line feed)
     type: string
     default: "."
+  error-pattern:
+    description: Specify the pattern if you want to detect analyzing errors from the standard error
+    type: string
+    default: '.*'
   result-path:
     description: Path to save analysis result
     type: string
@@ -48,6 +52,7 @@ steps:
         - steps: << parameters.prepare >>
       analysis-command: rails_best_practices
       analysis-arguments: << parameters.analysis-arguments >>
+      error-pattern: << parameters.error-pattern >>
       transformation-command: cat
       starting-points: << parameters.starting-points >>
       result-path: << parameters.result-path >>
