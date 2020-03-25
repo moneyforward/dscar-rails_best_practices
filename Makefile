@@ -1,4 +1,4 @@
-NAMESPACE = naokikimura
+NAMESPACE = moneyforward
 ORB = $(NAMESPACE)/dscar-rails_best_practices
 VERSION = dev:alpha
 SEGMENT = patch
