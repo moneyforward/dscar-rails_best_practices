@@ -3,8 +3,8 @@ version: 2.1
 description: Delta Rails Best Practices reports
 
 display:
-  home_url: https://github.com/naokikimura/dscar-rails_best_practices
-  source_url: https://github.com/naokikimura/dscar-rails_best_practices
+  home_url: https://corp.moneyforward.com/
+  source_url: https://github.com/moneyforward/dscar-rails_best_practices
 
 orbs:
   dscar: moneyforward/dscar@1.0.0
