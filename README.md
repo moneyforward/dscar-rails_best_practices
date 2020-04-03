@@ -1,5 +1,7 @@
 # dscar-rails_best_practices
 
+[![CircleCI](https://circleci.com/gh/moneyforward/dscar-rails_best_practices.svg?style=svg)](https://circleci.com/gh/moneyforward/dscar-rails_best_practices)
+
 Delta [Rails Best Practices](https://github.com/flyerhzm/rails_best_practices) reports running on CircleCI
 
 See https://circleci.com/orbs/registry/orb/moneyforward/dscar-rails_best_practices for details.
